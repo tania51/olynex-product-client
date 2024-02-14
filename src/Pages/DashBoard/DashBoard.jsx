@@ -6,7 +6,6 @@ import { Spinner } from "@material-tailwind/react";
 
 const DashBoard = () => {
     const [userInfo, allUserInfo] = useAllUser();
-    console.log(userInfo);
     
     const navigate = useNavigate();
     if(userInfo === undefined) {
@@ -18,7 +17,6 @@ const DashBoard = () => {
     }
     else {
         if(userInfo.role === 'distributor') {
-            console.log('distributor');
             return navigate('/dashboard/distributor-dashboard', {state: userInfo})
         }
         else if(userInfo.role === 'employee') {

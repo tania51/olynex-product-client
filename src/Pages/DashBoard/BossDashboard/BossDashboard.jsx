@@ -75,8 +75,8 @@ const BossDashboard = () => {
                     });
                 }
             })
-        
-        
+
+
     }
 
     // mockup handeler
@@ -117,103 +117,107 @@ const BossDashboard = () => {
                 <Title heading='Boss Dashboard'></Title>
             </div>
             <div>
-                <Card className="h-full w-full">
-                    <table className="w-full min-w-max table-auto text-left">
-                        <thead>
-                            <tr>
-                                {TABLE_HEAD.map((head) => (
-                                    <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal leading-none opacity-70"
-                                        >
-                                            {head}
-                                        </Typography>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                finalReviewTask && finalReviewTask.map(aTask => <tr key={aTask?._id} className="even:bg-blue-gray-50/50">
-                                    <td className="p-4">
-                                        <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {aTask?.assignedEmployeeId}
-                                        </Typography>
-                                    </td>
-                                    <td className="p-4">
-                                        <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {aTask?.assignedEmployee}
-                                        </Typography>
-                                    </td>
-                                    <td className="p-4">
-                                        <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {aTask?.jobTile}
-                                        </Typography>
-                                    </td>
-                                    <td className="p-4">
-                                        <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {aTask?.jobType}
-                                        </Typography>
-                                    </td>
-                                    <td className="p-4">
-                                        <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {aTask?.description}
-                                        </Typography>
-                                    </td>
-                                    <td className="p-4">
-                                        <div>
-                                            {/* <Button onClick={() => handleRevision(aTask)} className="bg-red-600 px-2 py-1">Revision</Button> */}
-                                            {/* revision handle start */}
+                {
+                    finalReviewTask && finalReviewTask.length === 0 ? <div className="flex justify-center items-center pt-8"><h3 className="text-4xl text-[#00f844] capitalize">Hurray! No task from Employee</h3></div>
+                        :
+                        <Card className="h-full w-full">
+                            <table className="w-full min-w-max table-auto text-left">
+                                <thead>
+                                    <tr>
+                                        {TABLE_HEAD.map((head) => (
+                                            <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                                                <Typography
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-normal leading-none opacity-70"
+                                                >
+                                                    {head}
+                                                </Typography>
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        finalReviewTask && finalReviewTask.map(aTask => <tr key={aTask?._id} className="even:bg-blue-gray-50/50">
+                                            <td className="p-4">
+                                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                                    {aTask?.assignedEmployeeId}
+                                                </Typography>
+                                            </td>
+                                            <td className="p-4">
+                                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                                    {aTask?.assignedEmployee}
+                                                </Typography>
+                                            </td>
+                                            <td className="p-4">
+                                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                                    {aTask?.jobTile}
+                                                </Typography>
+                                            </td>
+                                            <td className="p-4">
+                                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                                    {aTask?.jobType}
+                                                </Typography>
+                                            </td>
+                                            <td className="p-4">
+                                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                                    {aTask?.description}
+                                                </Typography>
+                                            </td>
+                                            <td className="p-4">
+                                                <div>
+                                                    {/* <Button onClick={() => handleRevision(aTask)} className="bg-red-600 px-2 py-1">Revision</Button> */}
+                                                    {/* revision handle start */}
 
-                                            <Popover placement="left-start">
-                                                <PopoverHandler>
-                                                    <Button className="bg-red-600  hover:bg-red-700 px-3 py-2 rounded">Revision</Button>
-                                                </PopoverHandler>
-                                                <PopoverContent className="w-96 bg-[#0a1b27] text-white">
-                                                    <Typography
-                                                        color="blue-gray"
-                                                        className="mb-1 font-bold text-2xl text-center"
-                                                    >
-                                                        Reason why need revision
-                                                    </Typography>
-                                                    <div>
-                                                        <Form onSubmit={(e) => handelerRevison(e, aTask)}>
-                                                            <Textarea name="revisionReason" size="lg"
-                                                                placeholder="Give a short note about revision"
-                                                                className=" !border-t-blue-gray-200 focus:!border-t-gray-900 my-3 text-gray-950"
-                                                                labelProps={{
-                                                                    className: "before:content-none after:content-none",
-                                                                }}></Textarea>
-                                                            <div className="flex justify-center">
-                                                                <Button type="submit" className="bg-[#0075ee] px-3 py-2 rounded hover:border-b-4 border-[#00f844]">Revision</Button>
+                                                    <Popover placement="left-start">
+                                                        <PopoverHandler>
+                                                            <Button className="bg-red-600  hover:bg-red-700 px-3 py-2 rounded">Revision</Button>
+                                                        </PopoverHandler>
+                                                        <PopoverContent className="w-96 bg-[#0a1b27] text-white">
+                                                            <Typography
+                                                                color="blue-gray"
+                                                                className="mb-1 font-bold text-2xl text-center"
+                                                            >
+                                                                Reason why need revision
+                                                            </Typography>
+                                                            <div>
+                                                                <Form onSubmit={(e) => handelerRevison(e, aTask)}>
+                                                                    <Textarea name="revisionReason" size="lg"
+                                                                        placeholder="Give a short note about revision"
+                                                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 my-3 text-gray-950"
+                                                                        labelProps={{
+                                                                            className: "before:content-none after:content-none",
+                                                                        }}></Textarea>
+                                                                    <div className="flex justify-center">
+                                                                        <Button type="submit" className="bg-[#0075ee] px-3 py-2 rounded hover:border-b-4 border-[#00f844]">Revision</Button>
+                                                                    </div>
+                                                                </Form>
                                                             </div>
-                                                        </Form>
-                                                    </div>
-                                                </PopoverContent>
-                                            </Popover>
+                                                        </PopoverContent>
+                                                    </Popover>
 
-                                            {/* revision handle end */}
-                                            {
-                                                aTask?.acceptByBoss === 'accept-employee-task' ? <Button className="bg-green-700 px-3 py-2 rounded mx-2">Accepted</Button>
-                                                :
-                                                <Button onClick={() => acceptHandeler(aTask)} className="bg-amber-500 px-3 py-2 rounded mx-2">Accept</Button>
-                                            }
-                                            {
-                                                aTask?.acceptByBoss === 'accept-employee-task' ? <Button onClick={() => mockUpHandeler(aTask)} id="tab-accept" className="bg-blue-600 px-3 py-2 rounded">Send to Mockup</Button>
-                                                :
-                                                <Button id="tab-accept" className="bg-gray-600 px-3 py-2 rounded" disabled>Send to Mockup</Button>
-                                            }
-                                            
-                                        </div>
-                                        <ToastContainer />
-                                    </td>
-                                </tr>)
-                            }
-                        </tbody>
-                    </table>
-                </Card>
+                                                    {/* revision handle end */}
+                                                    {
+                                                        aTask?.acceptByBoss === 'accept-employee-task' ? <Button className="bg-green-700 px-3 py-2 rounded mx-2">Accepted</Button>
+                                                            :
+                                                            <Button onClick={() => acceptHandeler(aTask)} className="bg-amber-500 px-3 py-2 rounded mx-2">Accept</Button>
+                                                    }
+                                                    {
+                                                        aTask?.acceptByBoss === 'accept-employee-task' ? <Button onClick={() => mockUpHandeler(aTask)} id="tab-accept" className="bg-blue-600 px-3 py-2 rounded">Send to Mockup</Button>
+                                                            :
+                                                            <Button id="tab-accept" className="bg-gray-600 px-3 py-2 rounded" disabled>Send to Mockup</Button>
+                                                    }
+
+                                                </div>
+                                                <ToastContainer />
+                                            </td>
+                                        </tr>)
+                                    }
+                                </tbody>
+                            </table>
+                        </Card>
+                }
             </div>
         </div>
     );

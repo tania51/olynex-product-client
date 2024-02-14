@@ -1,24 +1,21 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./useAxiosPublic";
-// import { AuthContext } from "../Provider/AuthProvider";
+
 
 
 const useAllTask = () => {
     const axiosPublic = useAxiosPublic();
-    const [allTaskInfo, setAllTaskInfo] = useState([])
 
-    useEffect( () => {
-        axiosPublic('/all-task')
-        .then(res => {
-            const allTask = res.data;
-            setAllTaskInfo(allTask)
-        })
-        .catch(err => {
-            console.log(err.message);
-        })
-    } , [axiosPublic])
+    // using tanstack query
+    const {refetch, data: allTaskInfo=[]} = useQuery({
+        queryKey: ['all-task'],
+        queryFn: async () => {
+            const res = await axiosPublic.get('/all-task')
+            return res.data
+        }
+    })
 
-    return allTaskInfo;
+    return [allTaskInfo, refetch]
 };
 
 export default useAllTask;

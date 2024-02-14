@@ -32,24 +32,9 @@ const DashboardSidebar = () => {
             </div>
         </>
     }
-    // else {
-    //     if(userInfo.role === 'distributor') {
-    //         console.log('distributor');
-    //         return setDistributor('distributor')
-    //     }
-    //     else if(userInfo.role === 'employee') {
-    //         return navigate('/dashboard/employee-dashboard', {state: userInfo})
-    //     }
-    //     else if(userInfo.role === 'boss') {
-    //         return navigate('/dashboard/boss-dashboard', {state: userInfo})
-    //     }
-    // }
-    // const [open, setOpen] = React.useState(false);
-    // const openDrawer = () => setOpen(true);
-    // const closeDrawer = () => setOpen(false);
 
     return (
-        <div className="bg-gray-950 h-screen text-white p-3 text-lg">
+        <div className="bg-gray-950 min-h-screen max-h-[20000px] text-white p-3 text-lg">
             <React.Fragment>
                 {/* distributor sidebar */}
                 {

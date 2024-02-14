@@ -1,8 +1,5 @@
-import { Button, Card, Popover, PopoverContent, PopoverHandler, Textarea, Typography } from "@material-tailwind/react";
+import { Button, Card, Typography } from "@material-tailwind/react";
 import { Bounce, ToastContainer, toast } from "react-toastify";
-
-
-import { Form } from "react-router-dom";
 import useReviewTask from "../../../../hooks/useReviewTask";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 import Title from "../../../../Components/Title/Title";
@@ -16,7 +13,6 @@ const TaskFromMockup = () => {
     const [reviewTask, refetch] = useReviewTask();
     const axiosPublic = useAxiosPublic();
     const finalReviewTask = reviewTask && reviewTask.filter(signleTask =>signleTask.sendToMockupFromBoss === 'send-to-boss-from-mockup' || signleTask.acceptByBossMockUpTask === 'accept-mockup-task')
-    console.log(reviewTask);
 
 
     // accept handeler
@@ -82,6 +78,8 @@ const TaskFromMockup = () => {
                 <SubTitle subHeading="Task From MockUp"></SubTitle>
             </div>
             <div>
+                {finalReviewTask && finalReviewTask.length === 0 ? <div className="flex justify-center items-center pt-8"><h3 className="text-4xl text-[#00f844] capitalize">Hurray! No task from Distributor</h3></div>
+                :
                 <Card className="h-full w-full">
                     <table className="w-full min-w-max table-auto text-left">
                         <thead>
@@ -150,6 +148,7 @@ const TaskFromMockup = () => {
                         </tbody>
                     </table>
                 </Card>
+                }
             </div>
         </div>
     );
