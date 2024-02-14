@@ -28,6 +28,18 @@ const AddProduct = () => {
         const deadline = form.deadline.value;
         const description = form.description.value;
 
+        // convert date for geting remaining data
+        const assignOnDate = new Date(assignOn);
+        const deadlineDate = new Date(deadline);
+
+        // convert date in miliseconds
+        const timeDifference = deadlineDate - assignOnDate;
+
+        // convert miliseconds to days
+        const remainingDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24))
+        console.log(remainingDays);
+
+
         const filteredAssignedEmployeeId = allUserInfo && allUserInfo.find(aUser => aUser.name === assignedEmployee);
         const assignedEmployeeId = filteredAssignedEmployeeId.SINO;
 
@@ -43,7 +55,8 @@ const AddProduct = () => {
             assignedEmployeeEmail: assignedEmployeeEmail,
             assignOn: assignOn,
             deadline: deadline,
-            description: description
+            description: description,
+            remainingDays: remainingDays
         }
 
         axiosPublic.post('/add-product', productInfo)

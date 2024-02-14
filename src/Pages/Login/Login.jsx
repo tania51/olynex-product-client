@@ -79,7 +79,7 @@ const Login = () => {
                                 name="email"
                                 size="lg"
                                 placeholder="name@mail.com"
-                                className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-2 rounded"
+                                className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-2 rounded text-gray-950"
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}

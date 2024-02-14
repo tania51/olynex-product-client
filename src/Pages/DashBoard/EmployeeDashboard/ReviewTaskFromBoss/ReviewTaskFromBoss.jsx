@@ -1,7 +1,6 @@
 import { Card, Typography } from "@material-tailwind/react";
 
 import { Bounce, ToastContainer, toast } from "react-toastify";
-import useAllTask from "../../../../hooks/useAllTask";
 import { useContext } from "react";
 import { AuthContext } from "../../../../Provider/AuthProvider";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
@@ -9,25 +8,25 @@ import useReviewTask from "../../../../hooks/useReviewTask";
 import Title from "../../../../Components/Title/Title";
 import SubTitle from "../../../../Components/SubTitle/SubTitle";
 import OlynexBtn2 from "../../../../Components/OlynexBtn/OlynexBtn2";
+import useAllUser from "../../../../hooks/useAllUser";
 
 
-const TABLE_HEAD = ["Job Title", "Type", "description", "Assigned On", "Deadline", "Action"];
+const TABLE_HEAD = ["Job Title", "Type", "description", "Revision Reason", "Assigned On", "Deadline", "Action"];
 
 
 const ReviewTaskFromBoss = () => {
-    const allTaskInfo = useAllTask();
     const { user } = useContext(AuthContext);
     const userEmail = user?.email;
     const axiosPublic = useAxiosPublic();
     const reviewTask = useReviewTask();
-    const reviewTaskFromBoss = reviewTask && reviewTask.filter(aTask => aTask.reviewToBoss === 'reviewToEmployee')
+    const [, allUserInfo] = useAllUser();
+    const reviewTaskFromBoss = reviewTask && reviewTask.filter(aTask => aTask.reviewToBoss === 'reviewToEmployee' && aTask.assignedEmployeeEmail === userEmail)
 
-    const singleEmployeeTask = allTaskInfo && allTaskInfo.find(singleTask => singleTask?.assignedEmployeeEmail === userEmail)
+    const singleEmployeeTask = allUserInfo && allUserInfo.find(singleTask => singleTask?.email === userEmail)
 
 
     // handle review
     const handleReview = (task) => {
-        console.log(task);
         const reviewToBoss = 'reviewToBoss'
         const newTask = {
             id: task._id,
@@ -36,7 +35,6 @@ const ReviewTaskFromBoss = () => {
 
         axiosPublic.patch(`/review-task/${task._id}`, newTask)
             .then(res => {
-                console.log(res.data);
                 if (res.data.modifiedCount > 0) {
                     toast.success('Send For Review to Boss Successfully!!', {
                         position: "top-right",
@@ -58,8 +56,8 @@ const ReviewTaskFromBoss = () => {
     return (
         <div className="w-full overflow-scroll">
             <div>
-                <Title heading={`${singleEmployeeTask?.assignedEmployee}'s Task Dashboard`}></Title>
-                <SubTitle subHeading={`SI NO: ${singleEmployeeTask?.assignedEmployeeId}`}></SubTitle>
+                <Title heading={`${singleEmployeeTask?.name}'s Task Dashboard`}></Title>
+                <SubTitle subHeading={`SI NO: ${singleEmployeeTask?.assignedEmployeeId || singleEmployeeTask?.SINO}`}></SubTitle>
             </div>
             <div>
                 {
@@ -98,6 +96,11 @@ const ReviewTaskFromBoss = () => {
                                             <td className="p-4">
                                                 <Typography variant="small" color="blue-gray" className="font-normal">
                                                     {aTask?.description}
+                                                </Typography>
+                                            </td>
+                                            <td className="p-4">
+                                                <Typography variant="small" color="blue-gray" className="font-normal text-[#00f844]">
+                                                    {aTask?.revisionNoteFromBoss}
                                                 </Typography>
                                             </td>
                                             <td className="p-4">

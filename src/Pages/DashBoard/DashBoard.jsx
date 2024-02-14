@@ -27,6 +27,12 @@ const DashBoard = () => {
         else if(userInfo.role === 'boss') {
             return navigate('/dashboard/boss-dashboard', {state: userInfo})
         }
+        else if(userInfo.role === 'mockup') {
+            return navigate('/dashboard/mockup-dashboard', {state: userInfo})
+        }
+        else if(userInfo.role === 'seo') {
+            return navigate('/dashboard/seo-dashboard', {state: userInfo})
+        }
     }
 };
 

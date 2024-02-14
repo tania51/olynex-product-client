@@ -1,61 +1,29 @@
 import { Button, Card, Popover, PopoverContent, PopoverHandler, Textarea, Typography } from "@material-tailwind/react";
-import Title from "../../../Components/Title/Title";
-import useReviewTask from "../../../hooks/useReviewTask";
 import { Bounce, ToastContainer, toast } from "react-toastify";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 
 import { Form } from "react-router-dom";
+import useReviewTask from "../../../../hooks/useReviewTask";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import Title from "../../../../Components/Title/Title";
+import SubTitle from "../../../../Components/SubTitle/SubTitle";
 
 const TABLE_HEAD = ["SI NO", "Assigned To", "Job Title", "Type", "description", "Action"];
 
-const BossDashboard = () => {
+
+
+const TaskFromMockup = () => {
     const [reviewTask, refetch] = useReviewTask();
     const axiosPublic = useAxiosPublic();
-    const finalReviewTask = reviewTask && reviewTask.filter(signleTask => signleTask.reviewToBoss === 'reviewToBoss' || signleTask.acceptByBoss === 'accept-employee-task')
+    const finalReviewTask = reviewTask && reviewTask.filter(signleTask =>signleTask.sendToMockupFromBoss === 'send-to-boss-from-mockup' || signleTask.acceptByBossMockUpTask === 'accept-mockup-task')
+    console.log(reviewTask);
 
-    // revision handeler
-    const handelerRevison = (e, task) => {
-        e.preventDefault();
-        const revisionReasonValue = e.target.revisionReason.value;
-        console.log('revisionReasonValue', revisionReasonValue);
-
-
-        const reviewToEmployee = 'reviewToEmployee'
-
-        const newTask = {
-            id: task._id,
-            reviewToBoss: reviewToEmployee,
-            revisionNoteFromBoss: revisionReasonValue
-        }
-
-        axiosPublic.patch(`/review-task/${task._id}`, newTask)
-            .then(res => {
-                if (res.data.modifiedCount > 0) {
-                    refetch()
-                    toast.success('Send For Revision to Employee Successfully!!', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "dark",
-                        transition: Bounce,
-                    });
-                }
-            })
-
-
-        e.target.revisionReason.value = '';
-    }
 
     // accept handeler
     const acceptHandeler = (task) => {
         const newTask = {
             id: task._id,
-            acceptByBoss: 'accept-employee-task'
+            acceptByBossMockUpTask: 'accept-mockup-task'
         }
 
         axiosPublic.patch(`/review-task/${task._id}`, newTask)
@@ -81,21 +49,17 @@ const BossDashboard = () => {
 
     // mockup handeler
     const mockUpHandeler = (task) => {
-        console.log(task);
-        console.log('mockup handeler');
 
         const newTask = {
             id: task._id,
-            sendToMockupFromBoss: 'send-to-mockup-from-boss'
+            sendToSEOFromBoss: 'send-to-seo-from-boss'
         }
-        console.log('new task', newTask);
 
         axiosPublic.patch(`/review-task/${task._id}`, newTask)
             .then(res => {
-                console.log('res.data', res.data);
                 if (res.data.modifiedCount > 0) {
                     refetch()
-                    toast.success('Send to Mockup Successfully!!', {
+                    toast.success('Send to SEO Successfully!!', {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -115,6 +79,7 @@ const BossDashboard = () => {
         <div className="w-full overflow-scroll">
             <div>
                 <Title heading='Boss Dashboard'></Title>
+                <SubTitle subHeading="Task From MockUp"></SubTitle>
             </div>
             <div>
                 <Card className="h-full w-full">
@@ -164,46 +129,17 @@ const BossDashboard = () => {
                                     </td>
                                     <td className="p-4">
                                         <div>
-                                            {/* <Button onClick={() => handleRevision(aTask)} className="bg-red-600 px-2 py-1">Revision</Button> */}
-                                            {/* revision handle start */}
-
-                                            <Popover placement="left-start">
-                                                <PopoverHandler>
-                                                    <Button className="bg-red-600  hover:bg-red-700 px-3 py-2 rounded">Revision</Button>
-                                                </PopoverHandler>
-                                                <PopoverContent className="w-96 bg-[#0a1b27] text-white">
-                                                    <Typography
-                                                        color="blue-gray"
-                                                        className="mb-1 font-bold text-2xl text-center"
-                                                    >
-                                                        Reason why need revision
-                                                    </Typography>
-                                                    <div>
-                                                        <Form onSubmit={(e) => handelerRevison(e, aTask)}>
-                                                            <Textarea name="revisionReason" size="lg"
-                                                                placeholder="Give a short note about revision"
-                                                                className=" !border-t-blue-gray-200 focus:!border-t-gray-900 my-3 text-gray-950"
-                                                                labelProps={{
-                                                                    className: "before:content-none after:content-none",
-                                                                }}></Textarea>
-                                                            <div className="flex justify-center">
-                                                                <Button type="submit" className="bg-[#0075ee] px-3 py-2 rounded hover:border-b-4 border-[#00f844]">Revision</Button>
-                                                            </div>
-                                                        </Form>
-                                                    </div>
-                                                </PopoverContent>
-                                            </Popover>
 
                                             {/* revision handle end */}
                                             {
-                                                aTask?.acceptByBoss === 'accept-employee-task' ? <Button className="bg-green-700 px-3 py-2 rounded mx-2">Accepted</Button>
+                                                aTask?.acceptByBossMockUpTask === 'accept-mockup-task' ? <Button className="bg-green-700 px-3 py-2 rounded mx-2">Accepted</Button>
                                                 :
                                                 <Button onClick={() => acceptHandeler(aTask)} className="bg-amber-500 px-3 py-2 rounded mx-2">Accept</Button>
                                             }
                                             {
-                                                aTask?.acceptByBoss === 'accept-employee-task' ? <Button onClick={() => mockUpHandeler(aTask)} id="tab-accept" className="bg-blue-600 px-3 py-2 rounded">Send to Mockup</Button>
+                                                aTask?.acceptByBossMockUpTask === 'accept-mockup-task' ? <Button onClick={() => mockUpHandeler(aTask)} id="tab-accept" className="bg-blue-600 px-3 py-2 rounded">Send to SEO</Button>
                                                 :
-                                                <Button id="tab-accept" className="bg-gray-600 px-3 py-2 rounded" disabled>Send to Mockup</Button>
+                                                <Button id="tab-accept" className="bg-gray-600 px-3 py-2 rounded" disabled>Send to SEO</Button>
                                             }
                                             
                                         </div>
@@ -219,4 +155,4 @@ const BossDashboard = () => {
     );
 };
 
-export default BossDashboard;
+export default TaskFromMockup;

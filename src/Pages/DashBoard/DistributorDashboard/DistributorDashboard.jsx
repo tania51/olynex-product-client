@@ -7,7 +7,7 @@ const TABLE_HEAD = ["SI NO", "Assigned To", "Job Title", "Type", "description", 
 
 const DistributorDashboard = () => {
     const allTaskInfo = useAllTask();
-    // console.log(allTaskInfo);
+    console.log(allTaskInfo);
 
     return (
         <div className="w-full overflow-scroll">

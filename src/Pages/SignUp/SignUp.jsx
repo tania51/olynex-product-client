@@ -37,7 +37,7 @@ const SignUp = () => {
             email: email,
             password: password,
             role: role,
-            assignedEmployeeId: assignedEmployeeId
+            SINO: assignedEmployeeId
         }
 
         signUp(email, password)

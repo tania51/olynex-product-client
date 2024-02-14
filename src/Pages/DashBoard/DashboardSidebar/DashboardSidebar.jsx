@@ -169,8 +169,9 @@ const DashboardSidebar = () => {
                                 <ListItemPrefix>
                                     <FcParallelTasks className="text-2xl" />
                                 </ListItemPrefix>
-                                <a href="/dashboard/boss-dashboard">Task For Review</a>
+                                <a href="/dashboard/boss-dashboard">Task For Review From Employee</a>
                             </ListItem>
+
                             <ListItem>
                                 <ListItemPrefix>
                                     <svg
@@ -186,7 +187,65 @@ const DashboardSidebar = () => {
                                         />
                                     </svg>
                                 </ListItemPrefix>
-                                <a href="/dashboard/review-task">Task For Review</a>
+                                <a href="/dashboard/boss-dashboard/mockup">Task For Review From MockUp</a>
+                            </ListItem>
+
+                            
+                            <ListItem>
+                                <ListItemPrefix>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        className="h-5 w-5"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 004.25 22.5h15.5a1.875 1.875 0 001.865-2.071l-1.263-12a1.875 1.875 0 00-1.865-1.679H16.5V6a4.5 4.5 0 10-9 0zM12 3a3 3 0 00-3 3v.75h6V6a3 3 0 00-3-3zm-3 8.25a3 3 0 106 0v-.75a.75.75 0 011.5 0v.75a4.5 4.5 0 11-9 0v-.75a.75.75 0 011.5 0v.75z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </ListItemPrefix>
+                                <a href="/dashboard/boss-dashboard/seo">Task For Review From SEO</a>
+                            </ListItem>
+
+                            <ListItem>
+                                <ListItemPrefix>
+                                <RiLogoutCircleLine className="text-3xl -mr-4 text-[#0099ff] pt-1" />
+                                </ListItemPrefix>
+                                {
+                                    user ? <>
+                                        <Button onClick={logOutHandeler}
+                                            variant="text"
+                                            size="sm"
+                                            className="inline-block text-white"
+                                        >
+                                            <span>Log Out</span>
+                                        </Button>
+                                    </>
+                                        :
+                                        <Button
+                                            variant="text"
+                                            size="sm"
+                                            className="hidden lg:inline-block text-white"
+                                        >
+                                            <a href="/login"><span>Login</span></a>
+                                        </Button>
+                                }
+                            </ListItem>
+                        </List>
+                    )
+                }
+
+                {/* Mockup sidebar */}
+                {
+                    userInfo.role === 'mockup' && (
+                        <List>
+                            <ListItem>
+                                <ListItemPrefix>
+                                    <FcParallelTasks className="text-2xl" />
+                                </ListItemPrefix>
+                                <a href="/dashboard/mockup-dashboard">Task For Review From Boss</a>
                             </ListItem>
                             <ListItem>
                                 <ListItemPrefix>
@@ -215,6 +274,45 @@ const DashboardSidebar = () => {
                         </List>
                     )
                 }
+
+                {/* SEO sidebar */}
+                {
+                    userInfo.role === 'seo' && (
+                        <List>
+                            <ListItem>
+                                <ListItemPrefix>
+                                    <FcParallelTasks className="text-2xl" />
+                                </ListItemPrefix>
+                                <a href="/dashboard/seo-dashboard">Task From Boss</a>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemPrefix>
+                                <RiLogoutCircleLine className="text-3xl -mr-4 text-[#0099ff] pt-1" />
+                                </ListItemPrefix>
+                                {
+                                    user ? <>
+                                        <Button onClick={logOutHandeler}
+                                            variant="text"
+                                            size="sm"
+                                            className="inline-block text-white"
+                                        >
+                                            <span>Log Out</span>
+                                        </Button>
+                                    </>
+                                        :
+                                        <Button
+                                            variant="text"
+                                            size="sm"
+                                            className="hidden lg:inline-block text-white"
+                                        >
+                                            <a href="/login"><span>Login</span></a>
+                                        </Button>
+                                }
+                            </ListItem>
+                        </List>
+                    )
+                }
+
             </React.Fragment>
         </div>
     );
